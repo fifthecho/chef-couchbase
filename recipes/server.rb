@@ -46,7 +46,7 @@ end
 
 
 if platform_family?("debian")
-  package "libssl0.9.8"
+  package "libssl0.9.8" do
     action:install
   end
   dpkg_package File.join(Chef::Config[:file_cache_path], package_file)
