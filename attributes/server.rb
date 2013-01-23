@@ -1,9 +1,16 @@
 package_machine = node['kernel']['machine'] == "x86_64" ? "x86_64" : "x86"
 
 default['couchbase']['server']['edition'] = "community"
-default['couchbase']['server']['version'] = "1.8.0"
+default['couchbase']['server']['version'] = "2.0.0"
 
-default['couchbase']['server']['package_file'] = "couchbase-server-#{node['couchbase']['server']['edition']}_#{package_machine}_#{node['couchbase']['server']['version']}.deb"
+if platform_family?("debian")
+	default['couchbase']['server']['package_file'] = "couchbase-server-#{node['couchbase']['server']['edition']}_#{package_machine}_#{node['couchbase']['server']['version']}.deb"
+end
+
+if platform_family?("rhel")
+	default['couchbase']['server']['package_file'] = "couchbase-server-#{node['couchbase']['server']['edition']}_#{package_machine}_#{node['couchbase']['server']['version']}.rpm"
+end
+
 default['couchbase']['server']['package_base_url'] = "http://packages.couchbase.com/releases/#{node['couchbase']['server']['version']}"
 default['couchbase']['server']['package_full_url'] = "#{node['couchbase']['server']['package_base_url']}/#{node['couchbase']['server']['package_file']}"
 
