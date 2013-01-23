@@ -45,7 +45,7 @@ remote_file File.join(Chef::Config[:file_cache_path], package_file) do
 end
 
 
-if platform_family?("debian")
+if platform_family?("debian") do
   dpkg_package File.join(Chef::Config[:file_cache_path], package_file)
 end
 
