@@ -45,15 +45,17 @@ remote_file File.join(Chef::Config[:file_cache_path], package_file) do
 end
 
 
-# if platform_family?("debian")
-#  dpkg_package File.join(Chef::Config[:file_cache_path], package_file)
-# end
+if platform_family?("debian")
+  dpkg_package File.join(Chef::Config[:file_cache_path], package_file)
+end
 
-package "couchbase-server" do
-  action :install
-  source File.join(Chef::Config[:file_cache_path], package_file)
-  options "--nogpgcheck"
-  version "#{node['couchbase']['server']['version']}"
+if platform_family?("rhel") do
+  package "couchbase-server" do
+    action :install
+    source File.join(Chef::Config[:file_cache_path], package_file)
+    options "--nogpgcheck"
+    version "#{node['couchbase']['server']['version']}"
+  end
 end
 
 
