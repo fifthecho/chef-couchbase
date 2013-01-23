@@ -24,6 +24,8 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
+package_machine = node['kernel']['machine'] == "x86_64" ? "x86_64" : "x86"
+
 if platform_family?("debian")
   package_file = "couchbase-server-#{node['couchbase']['server']['edition']}_#{package_machine}_#{node['couchbase']['server']['version']}.deb"
 end
