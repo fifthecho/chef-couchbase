@@ -53,6 +53,7 @@ package "couchbase-server" do
   action :install
   source File.join(Chef::Config[:file_cache_path], package_file)
   options "--nogpgcheck"
+  version "#{node['couchbase']['server']['version']}"
 end
 
 
