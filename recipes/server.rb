@@ -50,12 +50,7 @@ if platform_family?("debian")
 end
 
 if platform_family?("rhel") do
-  package "couchbase-server" do
-    action :install
-    source File.join(Chef::Config[:file_cache_path], package_file)
-    options "--nogpgcheck"
-    version "#{node['couchbase']['server']['version']}"
-  end
+  yum_package File.join(Chef::Config[:file_cache_path], package_file)
 end
 
 
