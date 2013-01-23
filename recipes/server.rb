@@ -29,6 +29,7 @@ remote_file File.join(Chef::Config[:file_cache_path], node['couchbase']['server'
   action :create_if_missing
 end
 
+# dpkg_package File.join(Chef::Config[:file_cache_path], node['couchbase']['server']['package_file'])
 package "couchbase-server" do
   action :install
   source File.join(Chef::Config[:file_cache_path], node['couchbase']['server']['package_file'])
