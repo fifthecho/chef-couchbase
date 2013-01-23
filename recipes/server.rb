@@ -24,15 +24,32 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-remote_file File.join(Chef::Config[:file_cache_path], node['couchbase']['server']['package_file']) do
-  source node['couchbase']['server']['package_full_url']
+if platform_family?("debian")
+  package_file = "couchbase-server-#{node['couchbase']['server']['edition']}_#{package_machine}_#{node['couchbase']['server']['version']}.deb"
+end
+
+if platform_family?("rhel")
+  package_file = "couchbase-server-#{node['couchbase']['server']['edition']}_#{package_machine}_#{node['couchbase']['server']['version']}.rpm"
+end
+
+
+package_base_url = "http://packages.couchbase.com/releases/#{node['couchbase']['server']['version']}"
+package_full_url = "#{package_base_url}/#{package_file}"
+
+
+remote_file File.join(Chef::Config[:file_cache_path], package_file) do
+  source package_full_url
   action :create_if_missing
 end
 
-# dpkg_package File.join(Chef::Config[:file_cache_path], node['couchbase']['server']['package_file'])
+
+# if platform_family?("debian")
+#  dpkg_package File.join(Chef::Config[:file_cache_path], package_file)
+# end
+
 package "couchbase-server" do
   action :install
-  source File.join(Chef::Config[:file_cache_path], node['couchbase']['server']['package_file'])
+  source File.join(Chef::Config[:file_cache_path], package_file)
   options "--nogpgcheck"
 end
 
