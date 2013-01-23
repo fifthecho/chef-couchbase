@@ -45,11 +45,11 @@ remote_file File.join(Chef::Config[:file_cache_path], package_file) do
 end
 
 
-if platform_family?("debian") do
+if platform_family?("debian")
   dpkg_package File.join(Chef::Config[:file_cache_path], package_file)
 end
 
-if platform_family?("rhel") do
+if platform_family?("rhel")
   yum_package File.join(Chef::Config[:file_cache_path], package_file)
 end
 
